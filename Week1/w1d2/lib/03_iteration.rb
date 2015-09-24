@@ -54,24 +54,24 @@ end
 
 class Array
   def bubble_sort!
-=begin
-    arr = self
-    swap = true
-    while swap == true
-      swap = false
+    sorted = false
+    while !sorted
+      sorted = true
       i = 1
-      while i < arr.length
-        if arr[i-1] > arr[i]
-          arr[i-1],arr[i] = arr[i],arr[i-1]
-          swap = true
+      while i < self.length
+        if self[i-1] > self[i]
+          self[i-1],self[i] = self[i],self[i-1]
+          sorted = false
         end
+        i+=1
       end
     end
-    arr
-=end
+    self
   end
 
   def bubble_sort(&prc)
+    sorted_arr = self.dup.bubble_sort!
+    sorted_arr
   end
 end
 
@@ -145,7 +145,12 @@ end
 
 class Array
   def my_each(&prc)
-    prc.call
+    i = 0
+    while i < self.length
+      prc.call(self[i])
+      i+=1
+    end
+    self
   end
 end
 
@@ -164,12 +169,22 @@ end
 
 class Array
   def my_map(&prc)
+    new_arr = []
+    self.my_each { |i| new_arr << prc.call(i) }
+    new_arr
   end
 
   def my_select(&prc)
+    new_arr = []
+    self.my_each { |i| new_arr << i if prc.call(i) }
+    new_arr
   end
 
   def my_inject(&blk)
+    #num = nil
+    #self.my_each { |i| yield(num,i) }
+    #blk.call(self.my_each { |i| num << i })
+    #num
   end
 end
 
