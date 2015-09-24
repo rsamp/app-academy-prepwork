@@ -4,6 +4,13 @@
 # factors of a given number.
 
 def factors(num)
+  i = 1
+  factors = []
+  while i <= num
+    factors << i if num % i == 0
+    i+=1
+  end
+  factors
 end
 
 # ### Bubble Sort
@@ -47,6 +54,21 @@ end
 
 class Array
   def bubble_sort!
+=begin
+    arr = self
+    swap = true
+    while swap == true
+      swap = false
+      i = 1
+      while i < arr.length
+        if arr[i-1] > arr[i]
+          arr[i-1],arr[i] = arr[i],arr[i-1]
+          swap = true
+        end
+      end
+    end
+    arr
+=end
   end
 
   def bubble_sort(&prc)
@@ -67,9 +89,25 @@ end
 # words).
 
 def substrings(string)
+  substrings = []
+  string.chars.each_with_index do |char,i|
+    substrings << char
+    j = i+1
+    while j < string.length
+      substrings << string[i..j]
+      j+=1
+    end
+  end
+  substrings
 end
 
 def subwords(word, dictionary)
+  subwords = []
+  substrings = substrings(word)
+  substrings.each do |str|
+    subwords << str if dictionary.include?(str) && !subwords.include?(str)
+  end
+  subwords
 end
 
 # ### Doubler
@@ -77,6 +115,9 @@ end
 # array with the original elements multiplied by two.
 
 def doubler(array)
+  doubled = []
+  array.each { |num| doubled << num*2 }
+  doubled
 end
 
 # ### My Each
@@ -104,6 +145,7 @@ end
 
 class Array
   def my_each(&prc)
+    
   end
 end
 
@@ -141,4 +183,5 @@ end
 # ```
 
 def concatenate(strings)
+  strings.inject { |string, word| string += word}
 end

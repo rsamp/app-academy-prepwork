@@ -11,6 +11,13 @@ describe "#factors" do
   end
 end
 
+describe "#substrings" do
+  it "correctly returns array of substrings" do
+    words = substrings("cat")
+    expect(words).to eq(["c", "ca", "cat", "a", "at", "t"])
+  end
+end
+
 describe "#subwords" do
   it "can find a simple word" do
     words = subwords("asdfcatqwer", ["cat", "car"])
