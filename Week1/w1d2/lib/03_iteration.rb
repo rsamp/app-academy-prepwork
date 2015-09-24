@@ -145,7 +145,7 @@ end
 
 class Array
   def my_each(&prc)
-    
+    prc.call
   end
 end
 
