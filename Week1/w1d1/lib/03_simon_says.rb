@@ -13,7 +13,7 @@ def repeat(word, num_times = 2)
 end
 
 def start_of_word(word, num_chars)
-  word[0..num_chars-1]
+  word[0, num_chars]
 end
 
 def first_word(phrase)
