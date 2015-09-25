@@ -5,6 +5,9 @@
 
 class Array
   def sum
+    sum = 0
+    self.each { |num| sum += num}
+    sum
   end
 end
 
@@ -16,9 +19,13 @@ end
 
 class Array
   def square!
+    self.map! { |num| num**2 }
   end
 
   def square
+    squares = []
+    self.each { |num| squares << num**2 }
+    squares
   end
 end
 
@@ -36,6 +43,9 @@ end
 
 class Array
   def my_uniq
+    uniques = []
+    self.each { |num| uniques << num unless uniques.include?(num) }
+    uniques
   end
 end
 
@@ -57,6 +67,19 @@ end
 
 class Array
   def two_sum
+    pairs = []
+    i = 0
+    while i < self.length - 1
+      j = i+1
+      while j < self.length
+        if self[i] + self[j] == 0
+          pairs << [i,j]
+        end
+        j+=1
+      end
+      i+=1
+    end
+    pairs
   end
 end
 
@@ -69,6 +92,13 @@ end
 
 class Array
   def median
+    return nil if self.empty?
+    sorted = self.sort
+    if sorted.length % 2 == 0
+      (sorted[sorted.length / 2] + sorted[sorted.length / 2 - 1]) / 2.0
+    else
+      sorted[sorted.length / 2]
+    end
   end
 end
 
@@ -121,6 +151,20 @@ end
 
 class Array
   def my_transpose
+    new_matrix = []
+    self[0].length.times do
+      new_matrix << []
+    end
+    i = 0
+    while i < self.length
+      j = 0
+      while j < self[i].length
+        new_matrix[j][i] = self[i][j]
+        j+=1
+      end
+      i+=1
+    end
+    new_matrix
   end
 end
 

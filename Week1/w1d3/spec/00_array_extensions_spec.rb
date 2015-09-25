@@ -102,6 +102,11 @@ describe Array do
       [3, 4]
     ] }
 
+    let(:bonus) { [
+      [1, 2, 3],
+      [4, 5, 6]
+    ] }
+
     it "transposes a small matrix" do
       expect(small_arr.my_transpose).to eq([
         [1, 3],
@@ -114,6 +119,14 @@ describe Array do
         [1, 4, 7],
         [2, 5, 8],
         [3, 6, 9]
+      ])
+    end
+
+    it "transposes a rectangular matrix" do
+      expect(bonus.my_transpose).to eq([
+        [1, 4],
+        [2, 5],
+        [3, 6]
       ])
     end
 

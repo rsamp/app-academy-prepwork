@@ -18,6 +18,13 @@
 
 class String
   def caesar(shift)
+    shifted_str = ""
+    self.each_char do |char|
+      shifted_val = char.ord + shift
+      shifted_val -= 26 if shifted_val > 122
+      shifted_str << shifted_val.chr
+    end
+    shifted_str
   end
 end
 
@@ -36,6 +43,14 @@ end
 
 class Hash
   def difference(other_hash)
+    differences = {}
+    self.each_key do |key|
+      differences[key] = self[key] unless other_hash.has_key?(key)
+    end
+    other_hash.each_key do |key|
+      differences[key] = other_hash[key] unless self.has_key?(key)
+    end
+    differences
   end
 end
 
