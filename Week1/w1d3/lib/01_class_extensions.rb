@@ -113,6 +113,18 @@ end
 
 class Fixnum
   def stringify(base)
+    stringified = []
+    i = 1
+    until i > self
+      converted_num = (self / i) % base
+      if converted_num > 9
+        converted_num -= 10
+        converted_num = (97 + converted_num).chr
+      end
+      stringified.unshift(converted_num.to_s)
+      i *= base
+    end
+    stringified.join
   end
 end
 

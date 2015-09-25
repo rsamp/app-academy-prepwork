@@ -69,6 +69,7 @@ describe Fixnum do
       expect(5.stringify(16)).to eq("5")
       expect(10.stringify(16)).to eq("a")
       expect(42.stringify(16)).to eq("2a")
+      expect(12.stringify(16)).to eq("c")
     end
   end
 end
