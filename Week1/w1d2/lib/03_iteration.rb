@@ -53,13 +53,14 @@ end
 # http://stackoverflow.com/questions/827649/what-is-the-ruby-spaceship-operator
 
 class Array
-  def bubble_sort!
+  def bubble_sort!(&prc)
+    prc ||= Proc.new { |x,y| x <=> y }
     sorted = false
     while !sorted
       sorted = true
       i = 1
       while i < self.length
-        if self[i-1] > self[i]
+        if prc.call(self[i-1], self[i]) == 1
           self[i-1],self[i] = self[i],self[i-1]
           sorted = false
         end
@@ -181,10 +182,10 @@ class Array
   end
 
   def my_inject(&blk)
-    #num = nil
-    #self.my_each { |i| yield(num,i) }
+    num = self[0]
+    self.drop(1).my_each { |i| num = blk.call(num,i) }
     #blk.call(self.my_each { |i| num << i })
-    #num
+    num
   end
 end
 
