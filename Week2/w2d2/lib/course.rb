@@ -50,5 +50,38 @@
 #     * May want to write a `Student#has_conflict?` method to help.
 
 class Course
+  # attr_reader @name
+  # attr_accessor department
+  # attr_accessor credits
+
+  def initialize(name, department, credits)
+    @name = name
+    @department = department
+    @credits = credits
+    @students = []
+  end
+
+  def name
+    @name
+  end
+
+  def department
+    @department
+  end
+
+  def credits
+    @credits
+  end
+
+  def students
+    @students
+  end
+
+  def add_student(student)
+    unless students.include?(student)
+      @students << student
+      student.enroll(self)
+    end
+  end
 
 end
