@@ -1,6 +1,6 @@
 module Ones
   def ones_place(digit)
-    return "" if digit == 0
+    return "zero" if digit == 0
     return "one" if digit == 1
     return "two" if digit == 2
     return "three" if digit == 3
@@ -49,44 +49,73 @@ module Tens
   end
 end
 
-module Hundreds
-  def hundreds_place(digits)
-    "#{ones_place(digit)} hundred"
-    # digits_arr = digits.to_s.split("")
-    # hundreds_digit = digits_arr[0].to_i
-    # remaining_digits = digits_arr[1..digits_arr.length-1]
-    # return "#{ones_place(hundreds_digit) if hundreds_digit != 0} hundred #{two_digits(remaining_digits.join.to_i) if remaining_digits.join.to_i != 0}".chomp(" ")
+module Magnitudes
+  def magnitudes(digits)
+    return " hundred" if digits == 100
+    return " thousand" if digits == 1000
+    return " million" if digits == 1000000
+    return " billion" if digits == 1000000000000
+    return " trillion" if digits == 1000000000000000
   end
 end
-=begin
-module Thousands
-    def thousands_place(digits)
-        digits_arr = digits.to_s.split("")
-        thousands_digit = digits_arr[0].to_i
-        remaining_digits = digits_arr[1..digits_arr.length-1]
-        return "#{ones_place(thousands_digit) if thousands_digit != 0} thousand #{three_digits(remaining_digits.join.to_i) if remaining_digits.join.to_i != 0}".chomp(" ")
-    end
-end
-=end
-class FixNum
+
+class Fixnum
   include Ones
   include Tens
-  include Hundreds
-  include Thousands
+  include Magnitudes
 
+  def in_words
+    in_words = ""
+
+    if self < 10
+      return ones_place(self)
+    elsif self < 100
+      in_words = two_digits(self)
+      in_words.slice!(" zero") if self.to_s[-1] == "0"
+      return in_words
+    elsif self < 100
+      prefix = self.to_s[0].in_words
+      suffix = magnitudes(self)
+      return prefix + suffix
+    end
+  end
+
+  def find_magnitude(digits)
+    return 100 if digits % 100 < 100
+  end
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=begin
   def in_words
     in_words = []
     split_by_threes = []
     group_of_three = ""
 
-    [-1..(self.to_s.length*-1)] do |i|
-      group_of_three += self.to_s[i]
-      if group_of_three.length == 3
-        split_by_threes.unshift(group_of_three)
-        group_of_three == ""
+    self.to_s.reverse.chars.each do |i|         # Start at end of integer array and go backwards
+      group_of_three += self.to_s[i]            # Add digit to group_of_three array
+      if group_of_three.length == 3             # Once it reaches 3 digits
+        split_by_threes.unshift(group_of_three) # Add to split_by_threes array
+        group_of_three == ""                    # And reset group_of_three
       end
     end
-    split_by_threes.unshift(group_of_three) unless group_of_three.empty? # pushes last group of 2 or 1
+
+    split_by_threes << group_of_three # unless group_of_three.empty? # pushes last group of 2 or 1
+
+    puts split_by_threes
 
     split_by_threes.each do |grouping|
       grouping.chars.each_with_index do |digit, i|
@@ -95,11 +124,16 @@ class FixNum
             in_words << hundreds_place(digit)
           elsif i == 1 # Tens place
             if digit == 1
-              
+
             in_words << tens_place(digit)
+            end
+          else # Ones place
+            in_words << ones_place(digit)
           end
         end
       end
     end
+    in_words
   end
 end
+=end
