@@ -41,4 +41,56 @@
 
 class TowersOfHanoi
 
+  attr_accessor :towers
+
+  def initialize
+    t1 = [3, 2, 1]
+    t2 = []
+    t3 = []
+    @towers = [t1, t2, t3]
+  end
+
+  def play
+    render
+
+    until won?
+      puts "From tower:"
+      from_tower = gets.to_i
+      puts "To tower:"
+      to_tower = gets.to_i
+      move(from_tower, to_tower)
+      puts "Invalid move" if !valid_move?(from_tower, to_tower)
+      render
+    end
+
+    puts "You win!"
+  end
+
+  def render
+    puts "Tower 0: #{towers[0].join(' ')}"
+    puts "Tower 1: #{towers[1].join(' ')}"
+    puts "Tower 2: #{towers[2].join(' ')}"
+  end
+
+  def won?
+    return true if ((towers[1].empty? || towers[2].empty?) && towers[0].empty?)
+    false
+  end
+
+  def valid_move?(from_tower, to_tower)
+    return false if towers[from_tower].empty?
+    return true if towers[to_tower].empty?
+    return false if towers[from_tower][0] > towers[to_tower][0]
+    return true
+  end
+
+  def move(from_tower, to_tower)
+    towers[to_tower] << towers[from_tower].pop if valid_move?(from_tower, to_tower)
+    towers
+  end
+
+end
+
+if $PROGRAM_NAME == __FILE__
+  TowersOfHanoi.new().play
 end
