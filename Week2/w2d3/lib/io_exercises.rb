@@ -26,3 +26,19 @@ def guessing_game
 
   puts "#{guess} is correct and it took #{guesses} guesses."
 end
+
+def file_shuffler
+  puts "Please provide file name: "
+  file = gets.chomp
+  base = File.basename(file, ".*")
+  extension = File.extname(file)
+  shuffled = File.open("#{base}-shuffled#{extension}", "w") do |shuffled_line|
+    File.readlines(file).shuffle.each do |original_line|
+      shuffled_line.puts original_line.chomp
+    end
+  end
+end
+
+if $PROGRAM_NAME == __FILE__
+  file_shuffler
+end
