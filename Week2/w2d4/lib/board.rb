@@ -87,7 +87,3 @@ class Board
   end
 
 end
-
-# if $PROGRAM_NAME == __FILE__
-#   board = Board.new
-# end
