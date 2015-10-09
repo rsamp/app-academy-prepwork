@@ -17,3 +17,8 @@
 # transmogrify("hello", options)
 # # options shouldn't change.
 # ```
+def transmogrify(string, options={:times => 1, :upcase => false, :reverse => false})
+  string*=options[:times]
+  string.upcase! if options[:upcase]
+  string.reverse! if options[:reverse]
+end
