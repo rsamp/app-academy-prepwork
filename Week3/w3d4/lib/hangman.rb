@@ -19,10 +19,10 @@ class Hangman
   end
 
   def take_turn
-    guess = guesser.guess
+    guess = guesser.guess(board)
     correct_guess_indices = referee.check_guess(guess)
     update_board(guess, correct_guess_indices)
-    guesser.handle_response
+    guesser.handle_response(guess, board.join(""))
   end
 
   def update_board(guess, indices)
@@ -62,11 +62,11 @@ class ComputerPlayer
     length
   end
 
-  def guess
+  def guess(board)
     gets.chomp[0] # only accepts first letter typed in
   end
 
-  def handle_response
+  def handle_response(guess, board)
 
   end
 end
