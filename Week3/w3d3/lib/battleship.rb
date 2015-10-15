@@ -24,6 +24,7 @@ class BattleshipGame
   end
 
   def play_turn
-    
+    play = player.get_play
+    attack(play)
   end
 end
