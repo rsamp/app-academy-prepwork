@@ -1,6 +1,5 @@
 module Ones
   def ones_place(digit)
-    return "zero" if digit == 0
     return "one" if digit == 1
     return "two" if digit == 2
     return "three" if digit == 3
@@ -49,41 +48,94 @@ module Tens
   end
 end
 
-module Magnitudes
-  def magnitudes(digits)
-    return " hundred" if digits == 100
-    return " thousand" if digits == 1000
-    return " million" if digits == 1000000
-    return " billion" if digits == 1000000000000
-    return " trillion" if digits == 1000000000000000
-  end
-end
+# module Magnitudes
+#   def magnitudes(digits)
+#     return " hundred" if digits == 100
+#     return " thousand" if digits == 1000
+#     return " million" if digits == 1000000
+#     return " billion" if digits == 1000000000000
+#     return " trillion" if digits == 1000000000000000
+#   end
+# end
 
 class Fixnum
   include Ones
   include Tens
-  include Magnitudes
+  # include Magnitudes
 
   def in_words
-    in_words = ""
+    words = ""
 
-    if self < 10
-      return ones_place(self)
-    elsif self < 100
-      in_words = two_digits(self)
-      in_words.slice!(" zero") if self.to_s[-1] == "0"
-      return in_words
-    elsif self < 100
-      prefix = self.to_s[0].in_words
-      suffix = magnitudes(self)
-      return prefix + suffix
+    if self == 0
+      return "zero"
     end
-  end
 
-  def find_magnitude(digits)
-    return 100 if digits % 100 < 100
-  end
+    remaining = self
+    current = remaining / 1000000000000
+    remaining -= current*1000000000000
 
+    if current > 0
+      trillions = current.in_words
+      words+=("#{trillions} trillion")
+      if remaining > 0
+        words+=" "
+      end
+    end
+
+    current = remaining / 1000000000
+    remaining -= current*1000000000
+
+    if current > 0
+      billions = current.in_words
+      words+=("#{billions} billion")
+      if remaining > 0
+        words+=" "
+      end
+    end
+
+    current = remaining / 1000000
+    remaining -= current*1000000
+
+    if current > 0
+      millions = current.in_words
+      words+=("#{millions} million")
+      if remaining > 0
+        words+=" "
+      end
+    end
+
+    current = remaining / 1000
+    remaining -= current*1000
+
+    if current > 0
+      thousands = current.in_words
+      words+=("#{thousands} thousand")
+      if remaining > 0
+        words+=" "
+      end
+    end
+
+    current = remaining / 100
+    remaining -= current*100
+
+    if current > 0
+      hundreds = current.in_words
+      words+=("#{hundreds} hundred")
+      if remaining > 0
+        words+=" "
+      end
+    end
+
+    if remaining > 0
+      if remaining < 10
+        words+=ones_place(remaining)
+      elsif remaining < 100
+        words+=two_digits(remaining)
+      end
+    end
+
+    words
+  end
 end
 
 
